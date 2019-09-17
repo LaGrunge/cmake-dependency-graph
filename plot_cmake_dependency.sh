@@ -1,7 +1,7 @@
 #!/bin/bash -eux
 
 set -e
-set -o pipefail
+#set -o pipefail
 
 
 sort_graph() {
