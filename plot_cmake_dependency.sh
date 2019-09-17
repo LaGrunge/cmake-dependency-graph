@@ -111,9 +111,8 @@ post() {
   curl -o /dev/null -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
   # Get the pull request number.
-  echo $(cat "$GITHUB_EVENT_PATH")
-  NUMBER=$(cat "$GITHUB_EVENT_PATH" | jq --raw-output .pull_request.number)
-
+#  NUMBER=$(cat "$GITHUB_EVENT_PATH" | jq --raw-output .pull_request.number)
+  NUMBER=`curl ${URI}/repos/${GITHUB_REPOSITORY}/pulls | jq " .[] | select (.head.sha == \"$GITHUB_SHA\") | .number"`
   echo "running $GITHUB_ACTION for PR #${NUMBER}"
 
   post_graph
