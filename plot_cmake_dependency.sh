@@ -31,7 +31,6 @@ make_png() {
 }
 
 
-
 diff_and_generate_graph2colored() {
   diff -u graph.dot pr.dot | awk '
   {
