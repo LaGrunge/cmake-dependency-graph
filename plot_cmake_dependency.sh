@@ -78,7 +78,6 @@ diff_and_generate_graph() {
 
 
 post_graph() {
-  HASH=`git describe --match="" --always --abbrev=40 --dirty`
   URL="${URI}/repos/${GITHUB_REPOSITORY}/issues/${NUMBER}/comments"
   echo $URL
   IMAGE=`curl --location --request POST "https://api.imgbb.com/1/upload?key=$IMGBB_API_KEY" -F "image=@graph.png" | jq -r .data.url`
@@ -112,7 +111,8 @@ post() {
   curl -o /dev/null -sSL -H "${AUTH_HEADER}" -H "${API_HEADER}" "${URI}/repos/${GITHUB_REPOSITORY}" || { echo "Error: Invalid repo, token or network issue!";  exit 1; }
 
   # Get the pull request number.
-  NUMBER=$(jq --raw-output .number "$GITHUB_EVENT_PATH")
+  echo $(cat "$GITHUB_EVENT_PATH")
+  NUMBER=$(cat "$GITHUB_EVENT_PATH" | jq --raw-output .pull_request.number)
 
   echo "running $GITHUB_ACTION for PR #${NUMBER}"
 
