@@ -4,7 +4,7 @@ FROM ubuntu:18.04 as base
 COPY plot_cmake_dependency.sh /plot_cmake_dependency.sh
 
 
-RUN sudo apt install jq curl diffutils cmake graphviz
+RUN apt-get update && apt-get --assume-yes install jq curl diffutils cmake graphviz
 
 
 # Code file to execute when the docker container starts up (`entrypoint.sh`)
